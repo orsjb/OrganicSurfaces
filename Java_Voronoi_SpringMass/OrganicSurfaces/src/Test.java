@@ -17,7 +17,7 @@ import megamu.mesh.MPolygon;
 import megamu.mesh.Voronoi;
 
 
-public class Test {
+public class Test { 
 
 	/**
 	 * @param args
