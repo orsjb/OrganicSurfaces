@@ -1,3 +1,4 @@
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -37,9 +38,9 @@ public class Test {
 	public static void vis(final DrawingSystem s) {
 		JFrame f = new JFrame();
 		final JComponent c = new JComponent() {
-			public void paintComponent(Graphics g) {
-				Graphics2D g2d = (Graphics2D)g;
-				g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+			public void paintComponent(Graphics gg) {
+				Graphics2D g = (Graphics2D)gg;
+				g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 				
 				synchronized(s.masses) {
 					g.setColor(Color.white);
@@ -53,12 +54,15 @@ public class Test {
 								(int)(mass.y-mass.radius/2.0), 
 								(int)(mass.radius), (int)(mass.radius));
 					}
+					g.setStroke(new BasicStroke(1));
+					g.setColor(new Color(1,0,0,0.1f));
 					for(Spring spring : s.springs) {
 						Mass m1 = spring.mass1;
 						Mass m2 = spring.mass2;
 						g.drawLine((int)m1.x, (int)(m1.y), (int)m2.x, (int)m2.y);
 					}
 
+					g.setStroke(new BasicStroke(1.4f));
 					g.setColor(Color.black);
 					Voronoi v = s.getVoronoi();
 					double[][] edges = v.getEdges();
