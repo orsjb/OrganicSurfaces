@@ -48,32 +48,32 @@ public class Test {
 					g.setColor(Color.black);
 					if(s.masses.size() == 0) return;
 
-//					g.setColor(Color.red);
-//					for(Mass mass : s.masses) {
-//						g.drawOval((int)(mass.x-mass.radius/2.0), 
-//								(int)(mass.y-mass.radius/2.0), 
-//								(int)(mass.radius), (int)(mass.radius));
-//					}
-//					g.setStroke(new BasicStroke(1));
-//					g.setColor(new Color(1,0,0,0.1f));
-//					for(Spring spring : s.springs) {
-//						Mass m1 = spring.mass1;
-//						Mass m2 = spring.mass2;
-//						g.drawLine((int)m1.x, (int)(m1.y), (int)m2.x, (int)m2.y);
-//					}
+					g.setColor(Color.red);
+					for(Mass mass : s.masses) {
+						g.drawOval((int)(mass.x-mass.radius/2.0), 
+								(int)(mass.y-mass.radius/2.0), 
+								(int)(mass.radius), (int)(mass.radius));
+					}
+					g.setStroke(new BasicStroke(1));
+					g.setColor(new Color(1,0,0,0.1f));
+					for(Spring spring : s.springs) {
+						Mass m1 = spring.mass1;
+						Mass m2 = spring.mass2;
+						g.drawLine((int)m1.x, (int)(m1.y), (int)m2.x, (int)m2.y);
+					}
 
 					Voronoi v = s.getVoronoi();
 					
-//					g.setStroke(new BasicStroke(1.4f));
-//					g.setColor(Color.black);
-//					double[][] edges = v.getEdges();
-//					for(int i=0; i < edges.length; i++)	{
-//						double startX = edges[i][0];
-//						double startY = edges[i][1];
-//						double endX = edges[i][2];
-//						double endY = edges[i][3];
-//						g.drawLine( (int)startX, (int)startY, (int)endX, (int)endY);
-//					}
+					g.setStroke(new BasicStroke(1.4f));
+					g.setColor(Color.black);
+					double[][] edges = v.getEdges();
+					for(int i=0; i < edges.length; i++)	{
+						double startX = edges[i][0];
+						double startY = edges[i][1];
+						double endX = edges[i][2];
+						double endY = edges[i][3];
+						g.drawLine( (int)startX, (int)startY, (int)endX, (int)endY);
+					}
 					
 					//voronoi bodies
 					//assuming regions array is ordered with points array, otherwise doH!

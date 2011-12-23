@@ -1,0 +1,9 @@
+TODO
+
+deactivate cells to save CPU
+reconstruct springs on drawing, spring rigidity varies, tests
+grow spring sizes over time then kill?
+** particles actually attraced to centre of mass of their own polygons?**
+** for a given polygon, fill out with uniformly distributed particles ** with boundary.
+add weights to points (weigted voronoi diagram?)
+refactor points sets - make uniform
