@@ -4,13 +4,18 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Polygon;
 import java.awt.RenderingHints;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionAdapter;
 
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 import mass_spring.Mass;
 import mass_spring.Spring;
@@ -116,7 +121,20 @@ public class Test {
 				c.repaint();
 			}
 		});
-		f.setContentPane(c);
+		JPanel p = new JPanel();
+		p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
+		JPanel buttons = new JPanel();
+		buttons.setLayout(new BoxLayout(buttons, BoxLayout.X_AXIS));
+		p.add(c);
+		p.add(buttons);
+		JButton resetConnectionsButton = new JButton("reset springs");
+		buttons.add(resetConnectionsButton);
+		resetConnectionsButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				s.setSpringsUniformTriangulation();
+			}
+		});
+		f.setContentPane(p);
 		f.setSize(500,500);
 		f.setVisible(true);
 	}
