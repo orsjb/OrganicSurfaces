@@ -9,3 +9,16 @@ add weights to points (weigted voronoi diagram?)
 refactor points sets - make uniform
 also possibly consider: springs break under tension
 naming - masses v points?
+
+problems:
+redistribution of cells is possibly broken - need to organise cell groups properly
+some regions are stupidly big (could we just limit regions to overlap of voronoi cell and limiting circle?)
+mass spring system probably needs to form more appropriate structures
+ - convex bodies with centres, possibly connected, mass spring system could correlate to group system
+mass spring system then needs to adaptively enforce boundaries: 
+ - tighter line of cells at boundaries (surface tension)
+ - repulsion between regions
+new regions inside old regions, need to make work
+
+Alternative idea:
+spraypaint region based - paint onto grid, scan grids to discover regions
