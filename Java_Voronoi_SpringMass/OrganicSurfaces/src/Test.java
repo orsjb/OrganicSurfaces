@@ -32,7 +32,7 @@ public class Test {
 		DrawingSystem s = new DrawingSystem();
 		s.init();
 		
-		s.randomPoints(10);
+		s.randomPoints(100);
 		
 		s.run();
 		vis(s);
@@ -48,6 +48,9 @@ public class Test {
 				g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 				
 				synchronized(s.masses) {
+
+					Voronoi v = s.getVoronoi();
+					
 					g.setColor(Color.white);
 					g.fillRect(0, 0, (int)s.width, (int)s.height);
 					g.setColor(Color.black);
@@ -57,7 +60,7 @@ public class Test {
 					for(Mass mass : s.masses) {
 						g.drawOval((int)(mass.x-mass.radius/2.0), 
 								(int)(mass.y-mass.radius/2.0), 
-								(int)(mass.radius), (int)(mass.radius));
+								3, 3);
 					}
 					g.setStroke(new BasicStroke(1));
 					g.setColor(new Color(1,0,0,0.1f));
@@ -67,7 +70,6 @@ public class Test {
 						g.drawLine((int)m1.x, (int)(m1.y), (int)m2.x, (int)m2.y);
 					}
 
-					Voronoi v = s.getVoronoi();
 					
 					g.setStroke(new BasicStroke(1.4f));
 					g.setColor(Color.black);
@@ -90,11 +92,7 @@ public class Test {
 						c.getColorComponents(rgb);
 						c = new Color(rgb[0], rgb[1], rgb[2], 0.5f);
 						g.setColor(c);
-						Polygon p = new Polygon();
-						double[][] coords = regions[i].getCoords();
-						for(int j = 0; j < coords.length; j++) {
-							p.addPoint((int)coords[j][0], (int)coords[j][1]);
-						}
+						Polygon p = DrawingSystem.toPolygon(regions[i]);
 						g.fillPolygon(p);
 					}
 				}
@@ -131,12 +129,21 @@ public class Test {
 		buttons.add(resetConnectionsButton);
 		resetConnectionsButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				s.setSpringsUniformTriangulation();
+				s.setSpringsUniformTriangulation(false);
+			}
+		});
+		JButton resetMassesButton = new JButton("reset masses");
+		buttons.add(resetMassesButton);
+		resetMassesButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				s.setMassesUniform();
+				s.setSpringsUniformTriangulation(true);
 			}
 		});
 		f.setContentPane(p);
-		f.setSize(500,500);
+		f.setSize(1000,700);
 		f.setVisible(true);
 	}
+	
 
 }
