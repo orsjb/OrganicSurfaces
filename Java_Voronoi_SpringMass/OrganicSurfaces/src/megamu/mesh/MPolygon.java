@@ -1,18 +1,18 @@
 package megamu.mesh;
 
+import java.awt.Polygon;
+
 
 public class MPolygon {
 
 	double[][] coords;
 	int count;
-	
-	public MPolygon(){
-		this(0);
-	}
+	final public int id;
 
-	public MPolygon(int points){
+	public MPolygon(int points, int id){
 		coords = new double[points][2];
 		count = 0;
+		this.id = id;
 	}
 
 	public void add(double dualPoints, double dualPoints2){
@@ -28,5 +28,7 @@ public class MPolygon {
 	public double[][] getCoords(){
 		return coords;
 	}
+
+
 
 }

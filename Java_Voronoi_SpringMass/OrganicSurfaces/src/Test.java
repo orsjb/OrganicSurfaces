@@ -90,7 +90,12 @@ public class Test {
 						Color c = new Color(colours[i]);
 						float[] rgb = new float[3];
 						c.getColorComponents(rgb);
-						c = new Color(rgb[0], rgb[1], rgb[2], 0.5f);
+						int id = regions[i].id;
+						if(s.idIsActive(id)) {
+							c = new Color(rgb[0] * 0.5f, rgb[1] * 0.5f, rgb[2] * 0.5f, 0.7f);
+						} else {
+							c = new Color(rgb[0], rgb[1], rgb[2], 0.5f);
+						}
 						g.setColor(c);
 						Polygon p = DrawingSystem.toPolygon(regions[i]);
 						g.fillPolygon(p);
@@ -110,6 +115,10 @@ public class Test {
 		});
 		c.addMouseMotionListener(new MouseMotionAdapter() {
 			public void mouseDragged(MouseEvent e) {
+				s.inputX = e.getX();
+				s.inputY = e.getY();
+			}
+			public void mouseMoved(MouseEvent e) {
 				s.inputX = e.getX();
 				s.inputY = e.getY();
 			}
@@ -138,6 +147,20 @@ public class Test {
 			public void actionPerformed(ActionEvent arg0) {
 				s.setMassesUniform();
 				s.setSpringsUniformTriangulation(true);
+			}
+		});
+		final JButton freezeButton = new JButton("freeze");
+		buttons.add(freezeButton);
+		freezeButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				boolean isFrozen = s.isFrozen();
+				if(isFrozen) {
+					freezeButton.setText("freeze");
+					s.setFrozen(false);
+				} else {
+					freezeButton.setText("unfreeze");
+					s.setFrozen(true);
+				}
 			}
 		});
 		f.setContentPane(p);

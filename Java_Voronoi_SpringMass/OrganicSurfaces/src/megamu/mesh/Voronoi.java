@@ -8,9 +8,12 @@ public class Voronoi {
 
 	double[][] edges;
 	MPolygon[] regions;
+	int[] ids;
 
-	public Voronoi( double[][] points ){
+	public Voronoi( double[][] points , int[] ids){
 
+		this.ids = ids;
+		
 		if( points.length < 1 ){
 			edges = new double[0][4];
 			regions = new MPolygon[0];
@@ -137,7 +140,7 @@ public class Voronoi {
 			}
 
 			// turn the coordinates into a polygon
-			regions[i] = new MPolygon(pointBuckets[i].size());
+			regions[i] = new MPolygon(pointBuckets[i].size(), ids[i]);
 			for( int face : faceOrder ){
 				regions[i].add( (double) dualPoints[face][0], (double) dualPoints[face][1] );
 			}

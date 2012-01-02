@@ -7,11 +7,11 @@ public class Hull {
 	int[] extrema;
 	MPolygon region;
 
-	public Hull( float[][] points ){
+	public Hull( float[][] points, int id ){
 		
 		if( points.length < 3 ){
 			extrema = new int[points.length];
-			region = new MPolygon(points.length);
+			region = new MPolygon(points.length, id);
 			for(int i=0; i<points.length; i++){
 				extrema[i] = i;
 				region.add(points[i][0], points[i][1]);
@@ -54,7 +54,7 @@ public class Hull {
 		}
 		
 		// make polygon
-		region = new MPolygon(extrema.length);
+		region = new MPolygon(extrema.length, id);
 		for(int i=0; i<extrema.length; i++){
 			region.add(points[extrema[i]][0], points[extrema[i]][1]);
 		}

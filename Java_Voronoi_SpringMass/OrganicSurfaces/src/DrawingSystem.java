@@ -44,7 +44,20 @@ public class DrawingSystem {
 	List<ChangeListener> changeListeners = new ArrayList<DrawingSystem.ChangeListener>();
 	Mass lastCentre;
 	Mass lastPoint;
+	boolean frozen = false;
+	int currentID = -1;
 	
+	public boolean isFrozen() {
+		return frozen;
+	}
+
+	public void setFrozen(boolean frozen) {
+		this.frozen = frozen;
+		if(!frozen) {
+			currentID = -1;
+		}
+	}
+
 	public interface ChangeListener {
 		public void systemChanged(DrawingSystem s);
 	}
@@ -55,6 +68,26 @@ public class DrawingSystem {
 	}
 	
 	public synchronized void update() {
+		if(!frozen) {
+			updateModel();
+		} else {
+			setInputPos(inputX, inputY);
+		}
+	}
+	
+	public void setInputPos(double x, double y) {
+		MPolygon[] regions = voronoi.getRegions();
+		for(MPolygon region : regions) {
+			//oh bugger we have to use awt to find out if region contains point
+			if(regionContains(region, x,y)) {
+				currentID = region.id;
+				notifyOfChanges();
+				break;
+			}
+		}
+	}
+	
+	private void updateModel() {
 		//update the model
 		model.step(masses, springs);
 		//respond to input
@@ -69,24 +102,30 @@ public class DrawingSystem {
 			setSpringsUniformTriangulation(true);
 		}
 		//notify
-		for(ChangeListener listner : changeListeners) {
-			listner.systemChanged(this);
-		}
+		notifyOfChanges();
 		//step
 		time++;
 		voronoiUpToDate = false;
+	}
+	
+	private void notifyOfChanges() {
+		for(ChangeListener listner : changeListeners) {
+			listner.systemChanged(this);
+		}
 	}
 	
 	public Voronoi getVoronoi() {
 		if(!voronoiUpToDate) {
 			//make an entirely new voronoi each time
 			double[][] massPoints = new double[masses.size()][2];
+			int[] ids = new int[masses.size()];
 			for(int i = 0; i < massPoints.length; i++) {
 				Mass m = masses.get(i);
 				massPoints[i][0] = m.x;
 				massPoints[i][1] = m.y;
+				ids[i] = m.Id();
 			}
-			voronoi = new Voronoi(massPoints);
+			voronoi = new Voronoi(massPoints, ids);
 			voronoiUpToDate = true;
 		}
 		return voronoi;
@@ -279,6 +318,9 @@ public class DrawingSystem {
 		m2Connections.add(m1);
 	}
 	
+	
+	
+	
 	//TODO getters/iterators for drawing (system agnostic, just return some kind of shape descriptor)
 	
 	////////////////////////////////////////////////////////////////////
@@ -297,6 +339,11 @@ public class DrawingSystem {
 		}
 		return p;
 	}
+
+	public boolean idIsActive(int id) {
+		return (id == currentID);
+	}
+
 	
 	
 	/////////////////////////////////////////////////////////////////////

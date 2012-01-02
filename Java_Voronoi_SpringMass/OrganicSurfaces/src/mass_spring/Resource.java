@@ -36,7 +36,7 @@ abstract class Resource{
     this.status|=ALIVE;
   };
   
-  int Id() { return id;}
+  public int Id() { return id;}
   boolean Alivep() { return ((status&ALIVE)!=0);}
   boolean Fixedp() { return ((status&FIXED)!=0);}
   boolean Selectedp() { return ((status&SELECTED)!=0);}

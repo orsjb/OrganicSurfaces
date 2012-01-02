@@ -1,5 +1,6 @@
 TODO
 
+ideas...
 deactivate cells to save CPU
 reconstruct springs on drawing, spring rigidity varies, tests
 grow spring sizes over time then kill?
@@ -9,6 +10,7 @@ add weights to points (weigted voronoi diagram?)
 refactor points sets - make uniform
 also possibly consider: springs break under tension
 naming - masses v points?
+find region boundaries then render boundaries as bezier curves
 
 problems:
 redistribution of cells is possibly broken - need to organise cell groups properly
