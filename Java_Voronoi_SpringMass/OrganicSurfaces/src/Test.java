@@ -97,7 +97,7 @@ public class Test {
 							c = new Color(rgb[0], rgb[1], rgb[2], 0.5f);
 						}
 						g.setColor(c);
-						Polygon p = DrawingSystem.toPolygon(regions[i]);
+						Polygon p = toPolygon(regions[i]);
 						g.fillPolygon(p);
 					}
 				}
@@ -168,5 +168,13 @@ public class Test {
 		f.setVisible(true);
 	}
 	
+	public static Polygon toPolygon(MPolygon mp) {
+		Polygon p = new Polygon();
+		double[][] coords = mp.getCoords();
+		for(int j = 0; j < coords.length; j++) {
+			p.addPoint((int)coords[j][0], (int)coords[j][1]);
+		}
+		return p;
+	}
 
 }

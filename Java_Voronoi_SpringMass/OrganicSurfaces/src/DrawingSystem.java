@@ -79,7 +79,7 @@ public class DrawingSystem {
 		MPolygon[] regions = voronoi.getRegions();
 		for(MPolygon region : regions) {
 			//oh bugger we have to use awt to find out if region contains point
-			if(regionContains(region, x,y)) {
+			if(region.contains(x,y)) {
 				currentID = region.id;
 				notifyOfChanges();
 				break;
@@ -217,7 +217,7 @@ public class DrawingSystem {
 			int color = -1;
 			//find it's matching color
 			for(int j = 0; j < regions.length; j++) {
-				if(regionContains(regions[j], x, y)) {
+				if(regions[j].contains(x, y)) {
 					color = backupMassColors.get(j);
 					break;
 				}
@@ -319,30 +319,30 @@ public class DrawingSystem {
 	}
 	
 	
-	
-	
-	//TODO getters/iterators for drawing (system agnostic, just return some kind of shape descriptor)
-	
-	////////////////////////////////////////////////////////////////////
-	//these methods are platform dependent and may need to be changed
-	public static boolean regionContains(MPolygon region, double x, double y) {
-		Polygon p = toPolygon(region);
-		return p.contains((int)x, (int)y);
-	}
-	
-
-	public static Polygon toPolygon(MPolygon mp) {
-		Polygon p = new Polygon();
-		double[][] coords = mp.getCoords();
-		for(int j = 0; j < coords.length; j++) {
-			p.addPoint((int)coords[j][0], (int)coords[j][1]);
-		}
-		return p;
-	}
 
 	public boolean idIsActive(int id) {
 		return (id == currentID);
 	}
+
+	
+	//TODO getters/iterators for drawing (system agnostic, just return some kind of shape descriptor)
+	
+	////////////////////////////////////////////////////////////////////
+//	//these methods are platform dependent and may need to be changed
+//	public static boolean regionContains(MPolygon region, double x, double y) {
+//		Polygon p = toPolygon(region);
+//		return p.contains((int)x, (int)y);
+//	}
+//	
+//
+//	public static Polygon toPolygon(MPolygon mp) {
+//		Polygon p = new Polygon();
+//		double[][] coords = mp.getCoords();
+//		for(int j = 0; j < coords.length; j++) {
+//			p.addPoint((int)coords[j][0], (int)coords[j][1]);
+//		}
+//		return p;
+//	}
 
 	
 	

@@ -29,6 +29,21 @@ public class MPolygon {
 		return coords;
 	}
 
+	/// http://alienryderflex.com/polygon/
+	//http://www.anddev.org/viewtopic.php?p=22799
+	public boolean contains(double x, double y) {
+    	 int polySides = coords.length;	//assumption?
+        boolean oddTransitions = false;
+        for( int i = 0, j = polySides -1; i < polySides; j = i++ ) {
+            if( ( coords[ i ][1] < y && coords[ j ][1] >= y ) || ( coords[ j ][1] < y && coords[ i ][1] >= y ) ) {
+                if( coords[ i ][0] + ( y - coords[ i ][1] ) / ( coords[ j ][1] - coords[ i ][1] ) * ( coords[ j ][0] - coords[ i ][0] ) < x ) {
+                    oddTransitions = !oddTransitions;          
+                }
+            }
+        }
+        return oddTransitions;
+    }  
+	 
 
 
 }
