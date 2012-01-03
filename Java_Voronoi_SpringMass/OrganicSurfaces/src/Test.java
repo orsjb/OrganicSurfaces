@@ -8,7 +8,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionAdapter;
 
 import javax.swing.BoxLayout;
@@ -43,6 +42,7 @@ public class Test {
 	public static void vis(final DrawingSystem s) {
 		JFrame f = new JFrame();
 		final JComponent c = new JComponent() {
+			private static final long serialVersionUID = 1L;
 			public void paintComponent(Graphics gg) {
 				Graphics2D g = (Graphics2D)gg;
 				g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);

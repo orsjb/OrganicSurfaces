@@ -1,12 +1,7 @@
-import java.awt.Polygon;
-import java.sql.Array;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Hashtable;
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
 
 import mass_spring.Mass;
@@ -14,7 +9,6 @@ import mass_spring.MassSpringModel;
 import mass_spring.Spring;
 import megamu.mesh.MPolygon;
 import megamu.mesh.Voronoi;
-
 
 
 
