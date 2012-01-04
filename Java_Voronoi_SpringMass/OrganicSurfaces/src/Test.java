@@ -9,6 +9,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
+import java.io.IOException;
+import java.net.InetSocketAddress;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -20,21 +22,46 @@ import mass_spring.Mass;
 import mass_spring.Spring;
 import megamu.mesh.MPolygon;
 import megamu.mesh.Voronoi;
+import de.sciss.net.OSCMessage;
+import de.sciss.net.OSCServer;
 
 
 public class Test { 
 
 	/**
 	 * @param args
+	 * @throws IOException 
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		DrawingSystem s = new DrawingSystem();
 		s.init();
 		
 		s.randomPoints(100);
 		
 		s.run();
+		
+		
+		
 		vis(s);
+		
+		//do OSC stuff
+		final OSCServer serv = OSCServer.newUsing(OSCServer.UDP);
+		final InetSocketAddress dest = new InetSocketAddress("localhost", 5000);
+		s.changeListeners.add(new DrawingSystem.ChangeListener() {
+			int lastID = -1;
+			public void systemChanged(DrawingSystem s) {
+				if(s.frozen && s.currentID != lastID) {
+					try {
+						serv.send(new OSCMessage("/exit/" + lastID), dest);
+						serv.send(new OSCMessage("/enter/" + s.currentID), dest);
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+					lastID = s.currentID;
+				}
+			}
+		});
+		serv.start();
 		
 	}
 	
